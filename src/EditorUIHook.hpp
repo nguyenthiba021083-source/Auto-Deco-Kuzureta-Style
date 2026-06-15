@@ -8,4 +8,6 @@ using namespace geode::prelude;
 class $modify(MyEditorUI, EditorUI) {
 public:
     bool init(LevelEditorLayer* editor);
+
+    void onDeco(CCObject*);
 };
