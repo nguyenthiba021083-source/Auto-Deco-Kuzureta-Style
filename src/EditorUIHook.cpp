@@ -5,7 +5,7 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
         return false;
     }
 
-    log::info("Auto-Deco-Kuzureta-Style: EditorUI loaded");
+    log::info("Editor opened");
 
     return true;
 }
