@@ -1,5 +1,6 @@
 #include "KuzuretaGenerator.hpp"
 #include "LayoutAnalyzer.hpp"
+#include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
 
@@ -19,31 +20,37 @@ constexpr int ID_CRYSTAL_B     = 1733;
 constexpr int ID_CITY_BLOCK    = 211;
 constexpr int ID_WINDOW_LIGHT  = 673;
 
+static void spawnDeco(
+    LevelEditorLayer* editor,
+    int objectID,
+    float x,
+    float y
+) {
+    auto obj = editor->createObject(
+        objectID,
+        { x, y },
+        false
+    );
+
+    if (obj) {
+        editor->addObject(obj);
+    }
+}
+
 void KuzuretaGenerator::generate() {
 
     auto stats = LayoutAnalyzer::analyze();
 
     log::info("========== Kuzureta Generator ==========");
-    log::info("Total Objects: {}", stats.totalObjects);
-    log::info("Level Length: {}", stats.levelLength);
+    log::info("Objects: {}", stats.totalObjects);
+    log::info("Length: {}", stats.levelLength);
 
-    if (stats.totalObjects < 100) {
-        log::info("Layout Size: Small");
-    }
-    else if (stats.totalObjects < 1000) {
-        log::info("Layout Size: Medium");
-    }
-    else {
-        log::info("Layout Size: Large");
-    }
+    auto editor = EditorLayerBridge::editor;
 
-    log::info("Cube Count: {}", stats.cubeCount);
-    log::info("Ship Count: {}", stats.shipCount);
-    log::info("Ball Count: {}", stats.ballCount);
-    log::info("UFO Count: {}", stats.ufoCount);
-    log::info("Wave Count: {}", stats.waveCount);
-
-    // Kuzureta preset statistics
+    if (!editor) {
+        log::error("EditorLayerBridge editor is null");
+        return;
+    }
 
     int glowCount = 200;
     int crystalCount = 80;
@@ -58,17 +65,100 @@ void KuzuretaGenerator::generate() {
         cityCount = 15;
         windowCount = 40;
     }
+    else if (stats.totalObjects < 1000) {
+        glowCount = 150;
+        crystalCount = 60;
+        chainCount = 35;
+        cityCount = 25;
+        windowCount = 80;
+    }
 
-    log::info("Glow Objects: {}", glowCount);
-    log::info("Crystal Objects: {}", crystalCount);
-    log::info("Chain Objects: {}", chainCount);
-    log::info("City Objects: {}", cityCount);
-    log::info("Window Objects: {}", windowCount);
+    float startX = 1000.f;
+    float baseY = 150.f;
 
-    log::info("Using Glow ID: {}", ID_GLOW_CIRCLE);
-    log::info("Using Crystal ID: {}", ID_CRYSTAL_A);
-    log::info("Using Chain ID: {}", ID_CHAIN_A);
-    log::info("Using City ID: {}", ID_CITY_BLOCK);
+    log::info("Generating Glow");
 
-    log::info("Kuzureta Analysis Complete");
+    for (int i = 0; i < glowCount; i++) {
+
+        spawnDeco(
+            editor,
+            ID_GLOW_CIRCLE,
+            startX + i * 120.f,
+            baseY + 180.f
+        );
+    }
+
+    log::info("Generating Crystal");
+
+    for (int i = 0; i < crystalCount; i++) {
+
+        spawnDeco(
+            editor,
+            (i % 2 == 0 ? ID_CRYSTAL_A : ID_CRYSTAL_B),
+            startX + i * 300.f,
+            baseY - 50.f
+        );
+    }
+
+    log::info("Generating Chains");
+
+    for (int i = 0; i < chainCount; i++) {
+
+        spawnDeco(
+            editor,
+            (i % 2 == 0 ? ID_CHAIN_A : ID_CHAIN_B),
+            startX + i * 200.f,
+            baseY + 350.f
+        );
+    }
+
+    log::info("Generating Glow Edge");
+
+    for (int i = 0; i < glowCount / 2; i++) {
+
+        spawnDeco(
+            editor,
+            ID_GLOW_EDGE,
+            startX + i * 140.f,
+            baseY + 50.f
+        );
+    }
+
+    log::info("Generating City");
+
+    for (int i = 0; i < cityCount; i++) {
+
+        spawnDeco(
+            editor,
+            ID_CITY_BLOCK,
+            startX + i * 250.f,
+            baseY - 200.f
+        );
+    }
+
+    log::info("Generating Windows");
+
+    for (int i = 0; i < windowCount; i++) {
+
+        spawnDeco(
+            editor,
+            ID_WINDOW_LIGHT,
+            startX + i * 80.f,
+            baseY - 180.f
+        );
+    }
+
+    log::info("Generating Grid Lines");
+
+    for (int i = 0; i < 100; i++) {
+
+        spawnDeco(
+            editor,
+            ID_LINE_THIN,
+            startX + i * 100.f,
+            baseY + 100.f
+        );
+    }
+
+    log::info("========== Kuzureta Deco Complete ==========");
 }
