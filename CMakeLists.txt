@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(AutoDecoKuzuretaStyle VERSION 1.0.0)
+project(AutoDecoKuzuretaStyle)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
     src/main.cpp
     src/EditorUIHook.cpp
+    src/KuzuretaGenerator.cpp
 )
 
-find_package(Geode REQUIRED)
-
-setup_geode_mod(${PROJECT_NAME})
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
