@@ -1,19 +1,15 @@
 #include "KuzuretaGenerator.hpp"
 
 void KuzuretaGenerator::generate() {
-    auto editor = LevelEditorLayer::get();
+    for (int i = 0; i < 50; i++) {
+        createGlow(1000.f + i * 30.f, 200.f);
+    }
 
-    if (!editor)
-        return;
-
-    float startX = 1000.f;
-    float y = 150.f;
+    for (int i = 0; i < 20; i++) {
+        createCrystal(1200.f + i * 80.f, 250.f);
+    }
 
     for (int i = 0; i < 10; i++) {
-        auto obj = editor->createObject(1, { startX + i * 30.f, y }, false);
-        
-        if (obj) {
-            editor->addObject(obj);
-        }
+        createChain(1500.f + i * 150.f, 300.f);
     }
 }
