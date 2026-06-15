@@ -9,5 +9,5 @@ class $modify(MyEditorUI, EditorUI) {
 public:
     bool init(LevelEditorLayer* editor);
 
-    void onDeco(CCObject*);
+    void onDeco(CCObject* sender);
 };
