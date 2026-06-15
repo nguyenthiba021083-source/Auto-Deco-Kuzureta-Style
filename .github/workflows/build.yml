@@ -1,0 +1,36 @@
+name: Build Geode Mod
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - win
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup XMake
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
+
+      - name: Setup Geode CLI
+        run: |
+          pip install geode
+
+      - name: Configure
+        run: |
+          geode config set sdk nightly
+
+      - name: Build
+        run: |
+          geode build
