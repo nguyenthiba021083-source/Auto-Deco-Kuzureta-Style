@@ -12,25 +12,23 @@ jobs:
       matrix:
         platform:
           - win
+          - android32
+          - android64
+          - mac
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.platform == 'win' && 'windows-latest' || matrix.platform == 'mac' && 'macos-latest' || 'ubuntu-latest' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup XMake
-        uses: xmake-io/github-action-setup-xmake@v1
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          xmake-version: latest
+          python-version: "3.11"
 
-      - name: Setup Geode CLI
-        run: |
-          pip install geode
-
-      - name: Configure
-        run: |
-          geode config set sdk nightly
+      - name: Install Geode CLI
+        run: pip install geode
 
       - name: Build
-        run: |
-          geode build
+        run: geode build ${{ matrix.platform }}
