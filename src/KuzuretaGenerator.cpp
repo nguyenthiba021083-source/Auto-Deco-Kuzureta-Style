@@ -1,15 +1,40 @@
 #include "KuzuretaGenerator.hpp"
 
+#include <Geode/Geode.hpp>
+
+using namespace geode::prelude;
+
 void KuzuretaGenerator::generate() {
+
+    log::info("========== Auto-Deco-Kuzureta ==========");
+
+    log::info("Glow Circle ID: {}", KuzuretaIDs::GLOW_CIRCLE);
+    log::info("Glow Edge ID: {}", KuzuretaIDs::GLOW_EDGE);
+
+    log::info("Chain A ID: {}", KuzuretaIDs::CHAIN_A);
+    log::info("Chain B ID: {}", KuzuretaIDs::CHAIN_B);
+
+    log::info("Line ID: {}", KuzuretaIDs::LINE_THIN);
+
+    log::info("Crystal A ID: {}", KuzuretaIDs::CRYSTAL_A);
+    log::info("Crystal B ID: {}", KuzuretaIDs::CRYSTAL_B);
+
+    log::info("City Block ID: {}", KuzuretaIDs::CITY_BLOCK);
+    log::info("Window Light ID: {}", KuzuretaIDs::WINDOW_LIGHT);
+
+    log::info("Generating Kuzureta Style...");
+
+    for (int i = 0; i < 200; i++) {
+        log::debug("Glow {}", i);
+    }
+
+    for (int i = 0; i < 80; i++) {
+        log::debug("Crystal {}", i);
+    }
+
     for (int i = 0; i < 50; i++) {
-        createGlow(1000.f + i * 30.f, 200.f);
+        log::debug("Chain {}", i);
     }
 
-    for (int i = 0; i < 20; i++) {
-        createCrystal(1200.f + i * 80.f, 250.f);
-    }
-
-    for (int i = 0; i < 10; i++) {
-        createChain(1500.f + i * 150.f, 300.f);
-    }
+    log::info("Generation Finished");
 }
