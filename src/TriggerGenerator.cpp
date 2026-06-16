@@ -1,6 +1,7 @@
 #include "TriggerGenerator.hpp"
-#include "EditorLayerBridge.hpp"
+
 #include "LayoutAnalyzer.hpp"
+#include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
 
@@ -11,104 +12,123 @@ constexpr int MOVE_TRIGGER  = 901;
 constexpr int ALPHA_TRIGGER = 1007;
 constexpr int COLOR_TRIGGER = 899;
 
-static void spawnTrigger(
+static GameObject* createTrigger(
     LevelEditorLayer* editor,
     int id,
     float x,
     float y
 ) {
+
     auto obj = editor->createObject(
         id,
-        {x,y},
+        { x, y },
         false
     );
 
     if (!obj)
-        return;
+        return nullptr;
 
     editor->addObject(obj);
+
+    return obj;
 }
 
 void TriggerGenerator::generatePulseTriggers() {
 
-    auto stats = LayoutAnalyzer::analyze();
     auto editor = EditorLayerBridge::editor;
 
     if (!editor)
         return;
 
-    for(float x = 0;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 0.f;
         x < stats.levelLength;
-        x += 600.f)
-    {
-        spawnTrigger(
+        x += 500.f
+    ) {
+
+        createTrigger(
             editor,
             PULSE_TRIGGER,
             x,
-            300.f
+            -300.f
         );
     }
 }
 
 void TriggerGenerator::generateMoveTriggers() {
 
-    auto stats = LayoutAnalyzer::analyze();
     auto editor = EditorLayerBridge::editor;
 
     if (!editor)
         return;
 
-    for(float x = 300;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 250.f;
         x < stats.levelLength;
-        x += 800.f)
-    {
-        spawnTrigger(
+        x += 700.f
+    ) {
+
+        createTrigger(
             editor,
             MOVE_TRIGGER,
             x,
-            350.f
+            -350.f
         );
     }
 }
 
 void TriggerGenerator::generateAlphaTriggers() {
 
-    auto stats = LayoutAnalyzer::analyze();
     auto editor = EditorLayerBridge::editor;
 
     if (!editor)
         return;
 
-    for(float x = 200;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 400.f;
         x < stats.levelLength;
-        x += 700.f)
-    {
-        spawnTrigger(
+        x += 900.f
+    ) {
+
+        createTrigger(
             editor,
             ALPHA_TRIGGER,
             x,
-            250.f
+            -400.f
         );
     }
 }
 
 void TriggerGenerator::generateColorTriggers() {
 
-    auto stats = LayoutAnalyzer::analyze();
     auto editor = EditorLayerBridge::editor;
 
     if (!editor)
         return;
 
-    for(float x = 100;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 600.f;
         x < stats.levelLength;
-        x += 500.f)
-    {
-        spawnTrigger(
+        x += 1000.f
+    ) {
+
+        createTrigger(
             editor,
             COLOR_TRIGGER,
             x,
-            200.f
+            -450.f
         );
     }
 }
