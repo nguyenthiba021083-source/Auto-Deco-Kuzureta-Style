@@ -2,13 +2,15 @@
 #include "KuzuretaGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 
+#include <Geode/Geode.hpp>
+#include <Geode/modify/EditorUI.hpp>
+
 using namespace geode::prelude;
 
 bool MyEditorUI::init(LevelEditorLayer* editor) {
     if (!EditorUI::init(editor))
         return false;
 
-    // Save editor reference
     EditorLayerBridge::editor = editor;
 
     auto sprite =
@@ -20,14 +22,18 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
         menu_selector(MyEditorUI::onDeco)
     );
 
-    btn->setScale(1.1f);
-    btn->setPosition({220.f, -90.f});
+    btn->setScale(1.3f);
 
-    if (auto menu = this->getChildByType<CCMenu>(0)) {
-        menu->addChild(btn);
-    }
+    // Góc trên bên trái
+    btn->setPosition({-180.f, 100.f});
 
-    log::info("Auto Deco Kuzureta loaded");
+    auto menu = CCMenu::create();
+    menu->setPosition({0, 0});
+    menu->addChild(btn);
+
+    this->addChild(menu, 999);
+
+    log::info("AUTO DECO BUTTON ADDED");
 
     return true;
 }
