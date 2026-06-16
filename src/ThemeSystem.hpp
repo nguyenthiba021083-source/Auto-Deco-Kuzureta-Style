@@ -2,8 +2,12 @@
 
 enum class ThemeType {
     Kuzureta,
-    Amethyst,
-    Modern,
-    Hell,
-    Space
+    City,
+    Crystal,
+    Night
+};
+
+class ThemeSystem {
+public:
+    static ThemeType currentTheme;
 };
