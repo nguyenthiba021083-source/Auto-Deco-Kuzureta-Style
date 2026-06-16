@@ -10,7 +10,6 @@
 using namespace geode::prelude;
 
 void KuzuretaGenerator::generate() {
-
     auto editor = EditorLayerBridge::editor;
 
     if (!editor) {
@@ -24,55 +23,29 @@ void KuzuretaGenerator::generate() {
     log::info("KUZURETA GENERATOR");
     log::info("====================");
 
-    log::info(
-        "Objects: {}",
-        stats.totalObjects
-    );
-
-    log::info(
-        "Length: {}",
-        stats.levelLength
-    );
-
-    log::info(
-        "Spikes: {}",
-        stats.spikeCount
-    );
-
-    log::info(
-        "Blocks: {}",
-        stats.blockCount
-    );
-
-    log::info(
-        "Deco: {}",
-        stats.decoCount
-    );
-
-    log::info(
-        "Portals: {}",
-        stats.portalCount
-    );
-
-    log::info(
-        "Triggers: {}",
-        stats.triggerCount
-    );
-
-    log::info(
-        "Orbs: {}",
-        stats.orbCount
-    );
-
-    log::info(
-        "Pads: {}",
-        stats.padCount
-    );
+    log::info("Objects: {}", stats.totalObjects);
+    log::info("Length: {}", stats.levelLength);
+    log::info("Spikes: {}", stats.spikeCount);
+    log::info("Blocks: {}", stats.blockCount);
+    log::info("Deco: {}", stats.decoCount);
+    log::info("Portals: {}", stats.portalCount);
+    log::info("Triggers: {}", stats.triggerCount);
+    log::info("Orbs: {}", stats.orbCount);
+    log::info("Pads: {}", stats.padCount);
 
     //----------------------------------
     // PARALLAX
     //----------------------------------
 
     ParallaxGenerator::generateBackgroundCity();
-
     ParallaxGenerator::generateFarGlow();
+
+    //----------------------------------
+    // TRIGGERS
+    //----------------------------------
+
+    TriggerGenerator::generatePulseTriggers();
+    TriggerGenerator::generateMoveTriggers();
+
+    log::info("Kuzureta generation finished");
+}
