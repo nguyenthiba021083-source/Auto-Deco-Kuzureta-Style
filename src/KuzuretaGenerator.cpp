@@ -34,8 +34,8 @@ void KuzuretaGenerator::generate() {
     for (int i = 0; i < 200; i++) {
         int objectID = ids[rand() % count];
 
-        float x = 300.f + (rand() % 4000);
-        float y = 100.f + (rand() % 500);
+        float x = 400.f + (i * 25.f);
+        float y = 220.f;
 
         auto obj = editor->createObject(
             objectID,
