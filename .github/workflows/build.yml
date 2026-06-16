@@ -16,3 +16,4 @@ jobs:
         with:
           platform: android64
           build-config: Release
+          geode-version: v5.7.1
