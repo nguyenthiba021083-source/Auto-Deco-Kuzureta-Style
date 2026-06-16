@@ -6,6 +6,12 @@ include($ENV{GEODE_SDK}/cmake/Geode.cmake)
 
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
+    src/EditorLayerBridge.cpp
+    src/EditorUIHook.cpp
+    src/KuzuretaGenerator.cpp
+    src/LayoutAnalyzer.cpp
+    src/ParallaxGenerator.cpp
+    src/TriggerGenerator.cpp
 )
 
 setup_geode_mod(${PROJECT_NAME})
