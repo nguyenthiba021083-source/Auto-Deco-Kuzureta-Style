@@ -1,11 +1,15 @@
 {
-    "geode": "5.7.1",
-    "gd": {
-        "android": "2.208",
-        "win": "2.208"
-    },
-    "id": "user.auto_deco_kuzureta_style",
-    "name": "Auto-Deco-Kuzureta-Style",
-    "version": "1.0.0",
-    "developer": "User"
+  "geode": "5.7.1",
+  "gd": {
+    "android": "2.208",
+    "win": "2.208"
+  },
+
+  "id": "user.auto-deco-kuzureta-style",
+  "name": "Auto-Deco-Kuzureta-Style",
+  "version": "1.0.0",
+
+  "developer": "User",
+
+  "description": "Automatic Kuzureta Style Decoration Generator"
 }
