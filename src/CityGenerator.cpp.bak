@@ -1,29 +1,26 @@
-#include "GlowGenerator.hpp"
+#include "CityGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 #include "KuzuretaGenerator.hpp"
-#include "ThemeSystem.hpp"
-#include "ClusterSystem.hpp"
-#include "DensitySystem.hpp"
-#include "TemplateDatabase.hpp"
 
 #include <Geode/Geode.hpp>
+#include <cstdlib>
 
 using namespace geode::prelude;
 
-void GlowGenerator::generate(const LayoutStats& stats) {
+void CityGenerator::generate(const LayoutStats&) {
     auto editor = EditorLayerBridge::editor;
     if (!editor) return;
 
-    for (float x = stats.startX; x < stats.endX; x += 120.f) {
+    for (int i = 0; i < 100; i++) {
         auto obj = editor->createObject(
-            KuzuretaIDs::GLOW_CIRCLE,
-            {x, stats.avgY + 100.f},
+            KuzuretaIDs::CITY_BLOCK,
+            {200.f + i * 120.f, 60.f},
             false
         );
 
         if (!obj) continue;
 
-        obj->setScale(2.5f);
+        obj->setScale(2.f + rand() % 4);
 
         editor->addChild(obj);
         editor->m_objects->addObject(obj);

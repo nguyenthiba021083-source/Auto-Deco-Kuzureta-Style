@@ -1,6 +1,10 @@
 #include "CrystalGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 #include "KuzuretaGenerator.hpp"
+#include "ThemeSystem.hpp"
+#include "ClusterSystem.hpp"
+#include "DensitySystem.hpp"
+#include "TemplateDatabase.hpp"
 
 #include <Geode/Geode.hpp>
 #include <cstdlib>
