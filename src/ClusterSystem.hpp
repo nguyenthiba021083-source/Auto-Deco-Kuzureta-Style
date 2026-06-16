@@ -1,7 +1,6 @@
 #pragma once
-
 struct ClusterData {
-    float x;
-    float y;
-    float radius;
+    float centerX;
+    float centerY;
+    int density;
 };
