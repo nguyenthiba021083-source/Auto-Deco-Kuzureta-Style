@@ -12,7 +12,7 @@ using namespace geode::prelude;
 
 class ImageDecoPopup : public FLAlertLayer {
 public:
-    static void show() {
+    static void open() {
 
         auto analysis =
             ImageAnalyzer::analyze(
