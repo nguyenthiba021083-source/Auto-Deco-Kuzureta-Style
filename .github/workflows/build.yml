@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: geode-sdk/build-geode-mod@main
+      - name: Setup Geode
+        uses: geode-sdk/setup-geode@main
+
+      - name: Build
+        uses: geode-sdk/build-geode-mod@main
         with:
           platform: android64
+          build-config: Release
