@@ -5,42 +5,34 @@
 
 using namespace geode::prelude;
 
-static void testCreate() {
+void ParallaxGenerator::generateBackgroundCity() {
     auto editor = EditorLayerBridge::editor;
 
-    if (!editor) {
+    if (!editor)
+        return;
+
+    auto obj = editor->createObject(
+        1,
+        {300.f, 150.f},
+        false
+    );
+
+    if (!obj) {
         FLAlertLayer::create(
             "Auto Deco",
-            "Editor NULL",
+            "Create Failed",
             "OK"
         )->show();
         return;
     }
 
-    auto obj = editor->createObject(
-        1,
-        { 300.f, 150.f },
-        false
-    );
+    editor->m_objects->addObject(obj);
 
-    if (obj) {
-        FLAlertLayer::create(
-            "Auto Deco",
-            "Object Created!",
-            "OK"
-        )->show();
-    }
-    else {
-        FLAlertLayer::create(
-            "Auto Deco",
-            "Create Failed!",
-            "OK"
-        )->show();
-    }
-}
-
-void ParallaxGenerator::generateBackgroundCity() {
-    testCreate();
+    FLAlertLayer::create(
+        "Auto Deco",
+        "Added To m_objects",
+        "OK"
+    )->show();
 }
 
 void ParallaxGenerator::generateFarGlow() {}
