@@ -1,3 +1,4 @@
+#include "KuzuretaGenerator.hpp"
 #include "EditorUIHook.hpp"
 #include "EditorLayerBridge.hpp"
 #include "KuzuretaGenerator.hpp"
@@ -43,6 +44,6 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 }
 
 void MyEditorUI::onDeco(CCObject*) {
-    log::info("BUTTON CLICKED");
+    KuzuretaGenerator::generate();
     KuzuretaGenerator::generate();
 }
