@@ -1,6 +1,7 @@
 #include "EditorUIHook.hpp"
 #include "EditorLayerBridge.hpp"
 #include "KuzuretaGenerator.hpp"
+#include "KuzuretaGenerator.hpp"
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
@@ -43,4 +44,5 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 
 void MyEditorUI::onDeco(CCObject*) {
     log::info("BUTTON CLICKED");
+    KuzuretaGenerator::generate();
 }
