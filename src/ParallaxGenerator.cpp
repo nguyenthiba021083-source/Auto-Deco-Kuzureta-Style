@@ -8,33 +8,101 @@ using namespace geode::prelude;
 void ParallaxGenerator::generateBackgroundCity() {
     auto editor = EditorLayerBridge::editor;
 
-    if (!editor)
-        return;
-
-    auto obj = editor->createObject(
-        1,
-        {300.f, 150.f},
-        false
-    );
-
-    if (!obj) {
+    if (!editor) {
         FLAlertLayer::create(
             "Auto Deco",
-            "Create Failed",
+            "EditorLayer NULL",
             "OK"
         )->show();
         return;
     }
 
-    editor->m_objects->addObject(obj);
+    float startX = 300.f;
+
+    for (int i = 0; i < 20; i++) {
+        auto obj = editor->createObject(
+            1,
+            { startX + i * 30.f, 150.f },
+            false
+        );
+
+        if (!obj)
+            continue;
+
+        editor->m_objects->addObject(obj);
+        editor->addSpecial(obj);
+        editor->objectMoved(obj);
+    }
 
     FLAlertLayer::create(
         "Auto Deco",
-        "Added To m_objects",
+        "20 Objects Added",
         "OK"
     )->show();
 }
 
-void ParallaxGenerator::generateFarGlow() {}
-void ParallaxGenerator::generateNearGlow() {}
-void ParallaxGenerator::generateForegroundDetail() {}
+void ParallaxGenerator::generateFarGlow() {
+    auto editor = EditorLayerBridge::editor;
+
+    if (!editor)
+        return;
+
+    for (int i = 0; i < 15; i++) {
+        auto obj = editor->createObject(
+            1764,
+            { 250.f + i * 60.f, 300.f },
+            false
+        );
+
+        if (!obj)
+            continue;
+
+        editor->m_objects->addObject(obj);
+        editor->addSpecial(obj);
+        editor->objectMoved(obj);
+    }
+}
+
+void ParallaxGenerator::generateNearGlow() {
+    auto editor = EditorLayerBridge::editor;
+
+    if (!editor)
+        return;
+
+    for (int i = 0; i < 15; i++) {
+        auto obj = editor->createObject(
+            1765,
+            { 250.f + i * 60.f, 200.f },
+            false
+        );
+
+        if (!obj)
+            continue;
+
+        editor->m_objects->addObject(obj);
+        editor->addSpecial(obj);
+        editor->objectMoved(obj);
+    }
+}
+
+void ParallaxGenerator::generateForegroundDetail() {
+    auto editor = EditorLayerBridge::editor;
+
+    if (!editor)
+        return;
+
+    for (int i = 0; i < 25; i++) {
+        auto obj = editor->createObject(
+            1,
+            { 150.f + i * 30.f, 90.f },
+            false
+        );
+
+        if (!obj)
+            continue;
+
+        editor->m_objects->addObject(obj);
+        editor->addSpecial(obj);
+        editor->objectMoved(obj);
+    }
+}
