@@ -27,7 +27,6 @@ static GameObject* createObj(
 
     obj->setScale(scale);
 
-    editor->addObject(obj);
 
     return obj;
 }
