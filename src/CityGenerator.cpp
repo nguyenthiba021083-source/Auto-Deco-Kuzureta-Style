@@ -22,6 +22,8 @@ void CityGenerator::generate(const LayoutStats&) {
 
         obj->setScale(2.f + rand() % 4);
 
+        editor->addChild(obj);
+        editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);
     }

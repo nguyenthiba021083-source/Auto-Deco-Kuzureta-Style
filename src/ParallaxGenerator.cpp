@@ -29,6 +29,7 @@ void ParallaxGenerator::generateBackgroundCity() {
         if (!obj)
             continue;
 
+        editor->addChild(obj);
         editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);
@@ -57,6 +58,7 @@ void ParallaxGenerator::generateFarGlow() {
         if (!obj)
             continue;
 
+        editor->addChild(obj);
         editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);
@@ -79,6 +81,7 @@ void ParallaxGenerator::generateNearGlow() {
         if (!obj)
             continue;
 
+        editor->addChild(obj);
         editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);
@@ -101,6 +104,7 @@ void ParallaxGenerator::generateForegroundDetail() {
         if (!obj)
             continue;
 
+        editor->addChild(obj);
         editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);

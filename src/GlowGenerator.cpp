@@ -21,6 +21,8 @@ void GlowGenerator::generate(const LayoutStats& stats) {
 
         obj->setScale(2.5f);
 
+        editor->addChild(obj);
+        editor->m_objects->addObject(obj);
         editor->addSpecial(obj);
         editor->objectMoved(obj);
     }

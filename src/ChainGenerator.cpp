@@ -22,6 +22,8 @@ void ChainGenerator::generate(const LayoutStats&) {
 
             if (!obj) continue;
 
+        editor->addChild(obj);
+        editor->m_objects->addObject(obj);
             editor->addSpecial(obj);
             editor->objectMoved(obj);
         }
