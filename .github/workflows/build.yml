@@ -7,16 +7,6 @@ workflow_dispatch:
 
 jobs:
 build:
-strategy:
-fail-fast: false
-matrix:
-platform:
-- win
-- android32
-- android64
-- macos
-- ios
-
 runs-on: ubuntu-latest
 
 steps:
@@ -26,4 +16,4 @@ steps:
   - name: Build Geode Mod
     uses: geode-sdk/build-geode-mod@v2
     with:
-      target: ${{ matrix.platform }}
+      target: android64
