@@ -13,8 +13,9 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 
     EditorLayerBridge::editor = editor;
 
-    auto sprite =
-        CCSprite::createWithSpriteFrameName("GJ_plusBtn_001.png");
+    auto sprite = CCSprite::createWithSpriteFrameName(
+        "GJ_plusBtn_001.png"
+    );
 
     auto btn = CCMenuItemSpriteExtra::create(
         sprite,
@@ -22,18 +23,23 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
         menu_selector(MyEditorUI::onDeco)
     );
 
-    btn->setScale(1.3f);
+    btn->setScale(2.0f);
 
-    // Góc trên bên trái
-    btn->setPosition({-180.f, 100.f});
+    auto winSize =
+        CCDirector::sharedDirector()->getWinSize();
+
+    btn->setPosition({
+        winSize.width / 2.f,
+        winSize.height / 2.f
+    });
 
     auto menu = CCMenu::create();
     menu->setPosition({0, 0});
     menu->addChild(btn);
 
-    this->addChild(menu, 999);
+    this->addChild(menu, 9999);
 
-    log::info("AUTO DECO BUTTON ADDED");
+    log::info("AUTO DECO BUTTON CREATED");
 
     return true;
 }
@@ -41,7 +47,7 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 void MyEditorUI::onDeco(CCObject*) {
     FLAlertLayer::create(
         "Auto Deco",
-        "Generating Kuzureta Style...",
+        "Button Works!",
         "OK"
     )->show();
 
