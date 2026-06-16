@@ -46,7 +46,9 @@ void KuzuretaGenerator::generate() {
         if (!obj)
             continue;
 
-        editor->addObject(obj);
+        editor->addChild(obj);
+        editor->addSpecial(obj);
+        editor->objectMoved(obj);
 
         created++;
     }
