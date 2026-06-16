@@ -1,0 +1,33 @@
+#include "KuzuretaGenerator.hpp"
+#include "EditorLayerBridge.hpp"
+
+#include <Geode/Geode.hpp>
+
+using namespace geode::prelude;
+
+void KuzuretaGenerator::generate() {
+    auto editor = EditorLayerBridge::editor;
+
+    if (!editor) {
+        FLAlertLayer::create(
+            "Auto Deco",
+            "Editor NULL",
+            "OK"
+        )->show();
+        return;
+    }
+
+    log::info("EDITOR PTR = {}", (void*)editor);
+
+    log::info(
+        "OBJECT COUNT = {}",
+        editor->m_objects ?
+        editor->m_objects->count() : 0
+    );
+
+    FLAlertLayer::create(
+        "Auto Deco",
+        "Editor OK",
+        "OK"
+    )->show();
+}
