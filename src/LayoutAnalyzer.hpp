@@ -12,6 +12,11 @@ struct LayoutStats {
     int padCount = 0;
 
     float levelLength = 0.f;
+
+    // Kuzureta generators
+    float startX = 0.f;
+    float endX = 10000.f;
+    float avgY = 250.f;
 };
 
 class LayoutAnalyzer {

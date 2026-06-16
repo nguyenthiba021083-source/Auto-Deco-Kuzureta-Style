@@ -43,5 +43,8 @@ LayoutStats LayoutAnalyzer::analyze() {
     }
 
     stats.levelLength = maxX;
+    stats.startX = 0.f;
+    stats.endX = maxX > 500.f ? maxX : 10000.f;
+    stats.avgY = 250.f;
     return stats;
 }
