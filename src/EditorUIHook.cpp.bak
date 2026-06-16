@@ -1,7 +1,8 @@
 #include "KuzuretaGenerator.hpp"
 #include "EditorUIHook.hpp"
 #include "EditorLayerBridge.hpp"
-#include "ImageAnalyzer.hpp"
+#include "KuzuretaGenerator.hpp"
+#include "KuzuretaGenerator.hpp"
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
@@ -34,6 +35,7 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
     btn->setPosition({150.f, 120.f});
 
     menu->addChild(btn);
+
     this->addChild(menu);
 
     log::info("AUTO DECO BUTTON CREATED");
@@ -42,21 +44,5 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 }
 
 void MyEditorUI::onDeco(CCObject*) {
-    auto result = ImageAnalyzer::analyze("kuzureta");
-
-    log::info(
-        "Theme={} crystal={} glow={} fog={}",
-        result.theme,
-        result.crystalDensity,
-        result.glowDensity,
-        result.fogDensity
-    );
-
     KuzuretaGenerator::generate();
-
-    FLAlertLayer::create(
-        "Build From Image",
-        result.theme.c_str(),
-        "OK"
-    )->show();
 }
