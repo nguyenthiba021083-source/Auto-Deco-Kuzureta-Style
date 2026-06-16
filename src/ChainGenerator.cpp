@@ -1,33 +1,44 @@
 #include "ChainGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 #include "KuzuretaGenerator.hpp"
-#include "ThemeSystem.hpp"
-#include "ClusterSystem.hpp"
-#include "DensitySystem.hpp"
-#include "TemplateDatabase.hpp"
 
 #include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
-void ChainGenerator::generate(const LayoutStats&) {
-    auto editor = EditorLayerBridge::editor;
-    if (!editor) return;
+void ChainGenerator::generate(
+    const LayoutStats&
+) {
+    auto editor =
+        EditorLayerBridge::editor;
 
-    for (int c = 0; c < 50; c++) {
-        float x = 300.f + c * 200.f;
+    if (!editor)
+        return;
 
-        for (int y = 700; y > 300; y -= 30) {
-            auto obj = editor->createObject(
-                KuzuretaIDs::CHAIN_A,
-                {x, (float)y},
-                false
-            );
+    for (int c = 0; c < 80; c++) {
 
-            if (!obj) continue;
+        float x =
+            300.f +
+            c * 120.f;
 
-        editor->addChild(obj);
-        editor->m_objects->addObject(obj);
+        for (
+            int y = 700;
+            y > 250;
+            y -= 20
+        ) {
+
+            auto obj =
+                editor->createObject(
+                    KuzuretaIDs::CHAIN_A,
+                    {x,(float)y},
+                    false
+                );
+
+            if (!obj)
+                continue;
+
+            editor->addChild(obj);
+            editor->m_objects->addObject(obj);
             editor->addSpecial(obj);
             editor->objectMoved(obj);
         }
