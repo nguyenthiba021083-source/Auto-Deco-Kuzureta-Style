@@ -1,3 +1,8 @@
+#include "KuzuretaGenerator.hpp"
+#include "GlowGenerator.hpp"
+#include "CrystalGenerator.hpp"
+#include "LayoutAnalyzer.hpp"
+#include "StyleClassifier.hpp"
 #include <Geode/Geode.hpp>
 #include <Geode/ui/TextInput.hpp>
 
@@ -48,15 +53,44 @@ public:
     }
 
     void onAnalyze(CCObject*) {
+
         std::string path =
             m_input->getString();
 
-        auto result =
+        auto analysis =
             ImageAnalyzer::analyze(path);
 
+        auto theme =
+            StyleClassifier::classify(
+                analysis
+            );
+
+        auto stats =
+            LayoutAnalyzer::analyze();
+
+        if (theme == "CRYSTAL") {
+
+            CrystalGenerator::generate(
+                stats
+            );
+
+        }
+        else if (theme == "GLOW") {
+
+            GlowGenerator::generate(
+                stats
+            );
+
+        }
+        else {
+
+            KuzuretaGenerator::generate();
+
+        }
+
         FLAlertLayer::create(
-            "Image Build",
-            ("Theme: " + result.theme).c_str(),
+            "Build Complete",
+            ("Theme: " + theme).c_str(),
             "OK"
         )->show();
     }
