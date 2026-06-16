@@ -3,5 +3,5 @@
 using namespace geode::prelude;
 
 $on_mod(Loaded) {
-    log::info("Auto-Deco-Kuzureta-Style loaded!");
+    log::info("Auto Deco Kuzureta Loaded");
 }
