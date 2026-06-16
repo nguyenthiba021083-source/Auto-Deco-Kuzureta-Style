@@ -1,8 +1,4 @@
 #include "KuzuretaGenerator.hpp"
-
-#include "LayoutAnalyzer.hpp"
-#include "TriggerGenerator.hpp"
-#include "ParallaxGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
@@ -13,39 +9,19 @@ void KuzuretaGenerator::generate() {
     auto editor = EditorLayerBridge::editor;
 
     if (!editor) {
-        log::error("Editor not found");
+        FLAlertLayer::create(
+            "Auto Deco",
+            "Editor not found!",
+            "OK"
+        )->show();
         return;
     }
 
-    auto stats = LayoutAnalyzer::analyze();
+    FLAlertLayer::create(
+        "Auto Deco",
+        "Generator Started!",
+        "OK"
+    )->show();
 
-    log::info("====================");
-    log::info("KUZURETA GENERATOR");
-    log::info("====================");
-
-    log::info("Objects: {}", stats.totalObjects);
-    log::info("Length: {}", stats.levelLength);
-    log::info("Spikes: {}", stats.spikeCount);
-    log::info("Blocks: {}", stats.blockCount);
-    log::info("Deco: {}", stats.decoCount);
-    log::info("Portals: {}", stats.portalCount);
-    log::info("Triggers: {}", stats.triggerCount);
-    log::info("Orbs: {}", stats.orbCount);
-    log::info("Pads: {}", stats.padCount);
-
-    //----------------------------------
-    // PARALLAX
-    //----------------------------------
-
-    ParallaxGenerator::generateBackgroundCity();
-    ParallaxGenerator::generateFarGlow();
-
-    //----------------------------------
-    // TRIGGERS
-    //----------------------------------
-
-    TriggerGenerator::generatePulseTriggers();
-    TriggerGenerator::generateMoveTriggers();
-
-    log::info("Kuzureta generation finished");
+    log::info("Kuzureta Generator Started");
 }
