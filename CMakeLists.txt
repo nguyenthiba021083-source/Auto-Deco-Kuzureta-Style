@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(AutoDecoKuzuretaStyle VERSION 1.0.0)
 
-include($ENV{GEODE_SDK}/cmake/Geode.cmake)
+find_package(Geode REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
@@ -13,5 +13,7 @@ add_library(${PROJECT_NAME} SHARED
     src/TriggerGenerator.cpp
     src/ParallaxGenerator.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} Geode::Geode)
 
 setup_geode_mod(${PROJECT_NAME})
