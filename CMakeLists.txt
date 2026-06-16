@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.21)
 
 project(AutoDecoKuzuretaStyle VERSION 1.0.0)
 
-find_package(Geode REQUIRED)
-
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
     src/EditorUIHook.cpp
@@ -14,9 +12,5 @@ add_library(${PROJECT_NAME} SHARED
     src/ParallaxGenerator.cpp
 )
 
-target_compile_features(${PROJECT_NAME}
-    PRIVATE
-    cxx_std_20
-)
-
+include(cmake/Geode.cmake)
 setup_geode_mod(${PROJECT_NAME})
