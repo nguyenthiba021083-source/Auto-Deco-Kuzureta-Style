@@ -1,121 +1,140 @@
 #include "ParallaxGenerator.hpp"
-#include "EditorLayerBridge.hpp"
+
 #include "LayoutAnalyzer.hpp"
+#include "EditorLayerBridge.hpp"
+#include "KuzuretaGenerator.hpp"
 
 #include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
-constexpr int CITY_BLOCK = 211;
-constexpr int GLOW_OBJ   = 1006;
-constexpr int DETAIL_OBJ = 1732;
-
-static void place(
+static GameObject* createObj(
     LevelEditorLayer* editor,
     int id,
     float x,
     float y,
-    float scale
+    float scale = 1.f
 ) {
 
     auto obj = editor->createObject(
         id,
-        {x,y},
+        { x, y },
         false
     );
 
-    if(!obj)
-        return;
+    if (!obj)
+        return nullptr;
 
     obj->setScale(scale);
 
     editor->addObject(obj);
+
+    return obj;
 }
 
 void ParallaxGenerator::generateBackgroundCity() {
 
-    auto editor = EditorLayerBridge::editor;
-    auto stats  = LayoutAnalyzer::analyze();
+    auto editor =
+        EditorLayerBridge::editor;
 
-    if(!editor)
+    if (!editor)
         return;
 
-    for(float x = 0;
-        x < stats.levelLength + 1000;
-        x += 160)
-    {
-        place(
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 0.f;
+        x < stats.levelLength;
+        x += 120.f
+    ) {
+
+        createObj(
             editor,
-            CITY_BLOCK,
+            KuzuretaIDs::CITY_BLOCK,
             x,
-            -120,
-            4.f
+            -50.f,
+            5.f
         );
     }
 }
 
 void ParallaxGenerator::generateFarGlow() {
 
-    auto editor = EditorLayerBridge::editor;
-    auto stats  = LayoutAnalyzer::analyze();
+    auto editor =
+        EditorLayerBridge::editor;
 
-    if(!editor)
+    if (!editor)
         return;
 
-    for(float x = 0;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 0.f;
         x < stats.levelLength;
-        x += 300)
-    {
-        place(
+        x += 350.f
+    ) {
+
+        createObj(
             editor,
-            GLOW_OBJ,
+            KuzuretaIDs::GLOW_CIRCLE,
             x,
-            350,
-            6.f
+            250.f,
+            8.f
         );
     }
 }
 
 void ParallaxGenerator::generateNearGlow() {
 
-    auto editor = EditorLayerBridge::editor;
-    auto stats  = LayoutAnalyzer::analyze();
+    auto editor =
+        EditorLayerBridge::editor;
 
-    if(!editor)
+    if (!editor)
         return;
 
-    for(float x = 0;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 0.f;
         x < stats.levelLength;
-        x += 180)
-    {
-        place(
+        x += 220.f
+    ) {
+
+        createObj(
             editor,
-            GLOW_OBJ,
+            KuzuretaIDs::GLOW_CIRCLE,
             x,
-            180,
-            3.f
+            180.f,
+            4.f
         );
     }
 }
 
 void ParallaxGenerator::generateForegroundDetail() {
 
-    auto editor = EditorLayerBridge::editor;
-    auto stats  = LayoutAnalyzer::analyze();
+    auto editor =
+        EditorLayerBridge::editor;
 
-    if(!editor)
+    if (!editor)
         return;
 
-    for(float x = 0;
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    for (
+        float x = 0.f;
         x < stats.levelLength;
-        x += 120)
-    {
-        place(
+        x += 200.f
+    ) {
+
+        createObj(
             editor,
-            DETAIL_OBJ,
+            KuzuretaIDs::CHAIN_A,
             x,
-            90,
-            1.5f
+            300.f
         );
     }
 }
