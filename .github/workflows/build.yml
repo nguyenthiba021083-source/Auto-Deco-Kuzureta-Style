@@ -1,31 +1,29 @@
-name: Build Geode Mod
+name: Build Auto-Deco-Kuzureta-Style
 
 on:
-  push:
-  pull_request:
-  workflow_dispatch:
+push:
+pull_request:
+workflow_dispatch:
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - win
-          - android32
-          - android64
-          - mac
+build:
+strategy:
+fail-fast: false
+matrix:
+platform:
+- win
+- android32
+- android64
+- macos
+- ios
 
-    runs-on: ubuntu-latest
+runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v4
 
-      - name: Check Files
-        run: |
-          echo "Auto-Deco-Kuzureta-Style"
-          ls -R
-
-      - name: Build Pass
-        run: |
-          echo "Build Successful"
+  - name: Build Geode Mod
+    uses: geode-sdk/build-geode-mod@v2
+    with:
+      target: ${{ matrix.platform }}
