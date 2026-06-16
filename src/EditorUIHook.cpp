@@ -1,10 +1,13 @@
-#include "LayoutAnalyzer.hpp"
-#include "GlowGenerator.hpp"
-#include "CrystalGenerator.hpp"
-#include "KuzuretaGenerator.hpp"
 #include "EditorUIHook.hpp"
+
 #include "EditorLayerBridge.hpp"
 #include "ImageAnalyzer.hpp"
+#include "StyleClassifier.hpp"
+#include "LayoutAnalyzer.hpp"
+
+#include "KuzuretaGenerator.hpp"
+#include "CrystalGenerator.hpp"
+#include "GlowGenerator.hpp"
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
@@ -18,7 +21,9 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
     EditorLayerBridge::editor = editor;
 
     auto sprite =
-        CCSprite::createWithSpriteFrameName("GJ_plusBtn_001.png");
+        CCSprite::createWithSpriteFrameName(
+            "GJ_plusBtn_001.png"
+        );
 
     if (!sprite) {
         log::error("SPRITE NULL");
@@ -39,27 +44,49 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
     menu->addChild(btn);
     this->addChild(menu);
 
-    log::info("AUTO DECO BUTTON CREATED");
+    log::info("BUILD FROM IMAGE READY");
 
     return true;
 }
 
 void MyEditorUI::onDeco(CCObject*) {
-    auto result = ImageAnalyzer::analyze("kuzureta");
 
-    log::info(
-        "Theme={} crystal={} glow={} fog={}",
-        result.theme,
-        result.crystalDensity,
-        result.glowDensity,
-        result.fogDensity
-    );
+    auto analysis =
+        ImageAnalyzer::analyze(
+            "/storage/emulated/0/Pictures/build.png"
+        );
 
-    KuzuretaGenerator::generate();
+    auto theme =
+        StyleClassifier::classify(
+            analysis
+        );
+
+    auto stats =
+        LayoutAnalyzer::analyze();
+
+    if (theme == "CRYSTAL") {
+
+        CrystalGenerator::generate(
+            stats
+        );
+
+    }
+    else if (theme == "GLOW") {
+
+        GlowGenerator::generate(
+            stats
+        );
+
+    }
+    else {
+
+        KuzuretaGenerator::generate();
+
+    }
 
     FLAlertLayer::create(
         "Build From Image",
-        result.theme.c_str(),
+        theme.c_str(),
         "OK"
     )->show();
 }
