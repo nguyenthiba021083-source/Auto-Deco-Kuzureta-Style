@@ -2,6 +2,7 @@
 #include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
+#include <cstdlib>
 
 using namespace geode::prelude;
 
@@ -17,24 +18,42 @@ void KuzuretaGenerator::generate() {
         return;
     }
 
-    auto obj = editor->createObject(
-        KuzuretaIDs::GLOW_CIRCLE,
-        {300.f, 200.f},
-        false
-    );
+    int ids[] = {
+        1,      // block
+        2,
+        8,
+        39,
+        103,
+        130
+    };
 
-    if (!obj) {
-        FLAlertLayer::create(
-            "Auto Deco",
-            "createObject FAILED",
-            "OK"
-        )->show();
-        return;
+    constexpr int count = sizeof(ids) / sizeof(ids[0]);
+
+    int created = 0;
+
+    for (int i = 0; i < 200; i++) {
+        int objectID = ids[rand() % count];
+
+        float x = 300.f + (rand() % 4000);
+        float y = 100.f + (rand() % 500);
+
+        auto obj = editor->createObject(
+            objectID,
+            {x, y},
+            false
+        );
+
+        if (!obj)
+            continue;
+
+        editor->addObject(obj);
+
+        created++;
     }
 
     FLAlertLayer::create(
         "Auto Deco",
-        "createObject SUCCESS",
+        fmt::format("Created {} Objects", created).c_str(),
         "OK"
     )->show();
 }
