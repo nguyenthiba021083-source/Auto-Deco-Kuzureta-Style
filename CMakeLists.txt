@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.21)
 
 project(AutoDecoKuzuretaStyle VERSION 1.0.0)
 
+include(cmake/CPM.cmake)
+
+CPMAddPackage(
+    NAME Geode
+    GITHUB_REPOSITORY geode-sdk/geode
+    GIT_TAG v5.7.1
+)
+
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
     src/EditorLayerBridge.cpp
@@ -12,11 +20,4 @@ add_library(${PROJECT_NAME} SHARED
     src/TriggerGenerator.cpp
 )
 
-if(NOT DEFINED ENV{GEODE_SDK})
-    set(GEODE_SDK $ENV{GITHUB_WORKSPACE}/geode-sdk)
-else()
-    set(GEODE_SDK $ENV{GEODE_SDK})
-endif()
-
-include(${GEODE_SDK}/cmake/Geode.cmake)
 setup_geode_mod(${PROJECT_NAME})
