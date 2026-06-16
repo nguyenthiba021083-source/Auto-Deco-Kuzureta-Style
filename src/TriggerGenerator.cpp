@@ -28,7 +28,6 @@ static GameObject* createTrigger(
     if (!obj)
         return nullptr;
 
-    editor->addObject(obj)->getSaveString());
 
     return obj;
 }
