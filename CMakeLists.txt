@@ -8,6 +8,9 @@ add_library(${PROJECT_NAME} SHARED
     src/KuzuretaGenerator.cpp
     src/LayoutAnalyzer.cpp
     src/EditorLayerBridge.cpp
+    
+    src/TriggerGenerator.cpp
+    src/ParallaxGenerator.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
