@@ -1,3 +1,6 @@
+#include "LayoutAnalyzer.hpp"
+#include "GlowGenerator.hpp"
+#include "CrystalGenerator.hpp"
 #include "KuzuretaGenerator.hpp"
 #include "EditorUIHook.hpp"
 #include "EditorLayerBridge.hpp"
