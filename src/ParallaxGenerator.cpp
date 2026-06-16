@@ -1,111 +1,48 @@
 #include "ParallaxGenerator.hpp"
-#include "LayoutAnalyzer.hpp"
 #include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
-static GameObject* createObj(
-    LevelEditorLayer* editor,
-    int id,
-    float x,
-    float y,
-    float scale = 1.f
-) {
+static void testCreate() {
+    auto editor = EditorLayerBridge::editor;
+
+    if (!editor) {
+        FLAlertLayer::create(
+            "Auto Deco",
+            "Editor NULL",
+            "OK"
+        )->show();
+        return;
+    }
+
     auto obj = editor->createObject(
-        id,
-        { x, y },
+        1,
+        { 300.f, 150.f },
         false
     );
 
-    if (!obj)
-        return nullptr;
-
-    obj->setScale(scale);
-
-    log::info(
-        "Created object {} at ({}, {})",
-        id,
-        x,
-        y
-    );
-
-    return obj;
+    if (obj) {
+        FLAlertLayer::create(
+            "Auto Deco",
+            "Object Created!",
+            "OK"
+        )->show();
+    }
+    else {
+        FLAlertLayer::create(
+            "Auto Deco",
+            "Create Failed!",
+            "OK"
+        )->show();
+    }
 }
 
 void ParallaxGenerator::generateBackgroundCity() {
-    auto editor = EditorLayerBridge::editor;
-
-    if (!editor)
-        return;
-
-    auto stats = LayoutAnalyzer::analyze();
-
-    for (float x = 0.f; x < stats.levelLength; x += 120.f) {
-        createObj(
-            editor,
-            1,
-            x,
-            -50.f,
-            5.f
-        );
-    }
+    testCreate();
 }
 
-void ParallaxGenerator::generateFarGlow() {
-    auto editor = EditorLayerBridge::editor;
-
-    if (!editor)
-        return;
-
-    auto stats = LayoutAnalyzer::analyze();
-
-    for (float x = 0.f; x < stats.levelLength; x += 350.f) {
-        createObj(
-            editor,
-            1,
-            x,
-            250.f,
-            8.f
-        );
-    }
-}
-
-void ParallaxGenerator::generateNearGlow() {
-    auto editor = EditorLayerBridge::editor;
-
-    if (!editor)
-        return;
-
-    auto stats = LayoutAnalyzer::analyze();
-
-    for (float x = 0.f; x < stats.levelLength; x += 220.f) {
-        createObj(
-            editor,
-            1,
-            x,
-            180.f,
-            4.f
-        );
-    }
-}
-
-void ParallaxGenerator::generateForegroundDetail() {
-    auto editor = EditorLayerBridge::editor;
-
-    if (!editor)
-        return;
-
-    auto stats = LayoutAnalyzer::analyze();
-
-    for (float x = 0.f; x < stats.levelLength; x += 200.f) {
-        createObj(
-            editor,
-            1,
-            x,
-            300.f,
-            1.f
-        );
-    }
-}
+void ParallaxGenerator::generateFarGlow() {}
+void ParallaxGenerator::generateNearGlow() {}
+void ParallaxGenerator::generateForegroundDetail() {}
