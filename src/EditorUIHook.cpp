@@ -1,5 +1,4 @@
 #include "EditorUIHook.hpp"
-#include "KuzuretaGenerator.hpp"
 #include "EditorLayerBridge.hpp"
 
 #include <Geode/Geode.hpp>
@@ -13,9 +12,16 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 
     EditorLayerBridge::editor = editor;
 
-    auto sprite = CCSprite::createWithSpriteFrameName(
-        "GJ_plusBtn_001.png"
-    );
+    auto sprite =
+        CCSprite::createWithSpriteFrameName("GJ_plusBtn_001.png");
+
+    if (!sprite) {
+        log::error("SPRITE NULL");
+        return true;
+    }
+
+    auto menu = CCMenu::create();
+    menu->setPosition({0.f, 0.f});
 
     auto btn = CCMenuItemSpriteExtra::create(
         sprite,
@@ -23,21 +29,11 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
         menu_selector(MyEditorUI::onDeco)
     );
 
-    btn->setScale(2.0f);
+    btn->setPosition({150.f, 120.f});
 
-    auto winSize =
-        CCDirector::sharedDirector()->getWinSize();
-
-    btn->setPosition({
-        winSize.width / 2.f,
-        winSize.height / 2.f
-    });
-
-    auto menu = CCMenu::create();
-    menu->setPosition({0, 0});
     menu->addChild(btn);
 
-    this->addChild(menu, 9999);
+    this->addChild(menu);
 
     log::info("AUTO DECO BUTTON CREATED");
 
@@ -45,11 +41,5 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
 }
 
 void MyEditorUI::onDeco(CCObject*) {
-    FLAlertLayer::create(
-        "Auto Deco",
-        "Button Works!",
-        "OK"
-    )->show();
-
-    KuzuretaGenerator::generate();
+    log::info("BUTTON CLICKED");
 }

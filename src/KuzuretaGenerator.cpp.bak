@@ -17,24 +17,9 @@ void KuzuretaGenerator::generate() {
         return;
     }
 
-    auto obj = editor->createObject(
-        KuzuretaIDs::GLOW_CIRCLE,
-        {300.f, 200.f},
-        false
-    );
-
-    if (!obj) {
-        FLAlertLayer::create(
-            "Auto Deco",
-            "createObject FAILED",
-            "OK"
-        )->show();
-        return;
-    }
-
     FLAlertLayer::create(
         "Auto Deco",
-        "createObject SUCCESS",
+        "Editor Connected",
         "OK"
     )->show();
 }
