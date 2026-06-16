@@ -33,33 +33,86 @@ LayoutStats LayoutAnalyzer::analyze() {
         if (!gameObj)
             continue;
 
+        //---------------------------------
+        // LEVEL LENGTH
+        //---------------------------------
+
+        if (gameObj->getPositionX() > maxX)
+            maxX = gameObj->getPositionX();
+
+        //---------------------------------
+        // OBJECT TYPE
+        //---------------------------------
+
         int id = gameObj->m_objectID;
 
-        maxX = std::max(
-            maxX,
-            gameObj->getPositionX()
-        );
+        // Spikes
 
-        if (id <= 8)
+        if (
+            id == 8 ||
+            id == 39 ||
+            id == 103 ||
+            id == 392
+        ) {
             stats.spikeCount++;
+        }
 
-        else if (id <= 200)
+        // Blocks
+
+        else if (
+            id >= 1 &&
+            id <= 500
+        ) {
             stats.blockCount++;
+        }
 
-        else if (id >= 700 && id <= 900)
+        // Portals
+
+        else if (
+            id == 12 ||
+            id == 13 ||
+            id == 47 ||
+            id == 111 ||
+            id == 660
+        ) {
             stats.portalCount++;
+        }
 
-        else if (id >= 1000 && id <= 1300)
-            stats.triggerCount++;
+        // Orbs
 
-        else if (id >= 30 && id <= 60)
+        else if (
+            id == 36 ||
+            id == 84 ||
+            id == 141 ||
+            id == 1022
+        ) {
             stats.orbCount++;
+        }
 
-        else if (id >= 130 && id <= 160)
+        // Pads
+
+        else if (
+            id == 35 ||
+            id == 67 ||
+            id == 140
+        ) {
             stats.padCount++;
+        }
 
-        else
+        // Triggers
+
+        else if (
+            id >= 899 &&
+            id <= 1616
+        ) {
+            stats.triggerCount++;
+        }
+
+        // Decoration
+
+        else {
             stats.decoCount++;
+        }
     }
 
     stats.levelLength = maxX;
