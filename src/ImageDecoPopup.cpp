@@ -7,7 +7,7 @@ using namespace geode::prelude;
 void ImageDecoPopup::open() {
     FLAlertLayer::create(
         "Auto Deco",
-        "Image picker temporarily disabled",
+        "Image Deco Popup Loaded",
         "OK"
     )->show();
 }
