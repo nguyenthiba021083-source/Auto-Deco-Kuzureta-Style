@@ -1,11 +1,5 @@
 #include "ImageDecoPopup.hpp"
 
-#include "ImageAnalyzer.hpp"
-#include "LayoutAnalyzer.hpp"
-#include "CrystalGenerator.hpp"
-#include "GlowGenerator.hpp"
-#include "KuzuretaGenerator.hpp"
-
 #include <Geode/Geode.hpp>
 #include <Geode/utils/file.hpp>
 #include <Geode/utils/async.hpp>
@@ -23,34 +17,23 @@ void ImageDecoPopup::open() {
         [](geode::utils::file::PickResult result) {
 
             if (!result) {
-                FLAlertLayer::create(
-                    "Error",
-                    "Failed to open file picker",
-                    "OK"
-                )->show();
+                log::error("pick failed");
                 return;
             }
 
             auto picked = result.unwrap();
 
             if (!picked.has_value()) {
-                FLAlertLayer::create(
-                    "Cancelled",
-                    "No image selected",
-                    "OK"
-                )->show();
+                log::info("no file selected");
                 return;
             }
 
             auto path = picked.value();
 
-            FLAlertLayer::create(
-                "DEBUG PATH",
-                path.string().c_str(),
-                "OK"
-            )->show();
-
-            return;
+            log::info(
+                "picked file = {}",
+                path.string()
+            );
         }
     );
 }
