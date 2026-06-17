@@ -1,4 +1,11 @@
 #include "ImageDecoPopup.hpp"
+
+#include "ImageAnalyzer.hpp"
+#include "LayoutAnalyzer.hpp"
+#include "CrystalGenerator.hpp"
+#include "GlowGenerator.hpp"
+#include "KuzuretaGenerator.hpp"
+
 #include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
@@ -6,7 +13,22 @@ using namespace geode::prelude;
 void ImageDecoPopup::open() {
     FLAlertLayer::create(
         "Build From Image",
-        "Nhap duong dan anh se duoc them sau",
+        "TODO: Nhap duong dan anh",
         "OK"
     )->show();
+
+    // Ke hoach:
+    //
+    // std::string path =
+    // "/storage/emulated/0/Pictures/build.png";
+    //
+    // auto result = ImageAnalyzer::analyze(path);
+    // auto stats  = LayoutAnalyzer::analyze();
+    //
+    // if (result.theme == "CRYSTAL")
+    //     CrystalGenerator::generate(stats);
+    // else if (result.theme == "GLOW")
+    //     GlowGenerator::generate(stats);
+    // else
+    //     KuzuretaGenerator::generate();
 }
