@@ -7,29 +7,66 @@
 #include "KuzuretaGenerator.hpp"
 
 #include <Geode/Geode.hpp>
+#include <Geode/utils/file.hpp>
 
 using namespace geode::prelude;
 
 void ImageDecoPopup::open() {
-    std::string path =
-        "/storage/emulated/0/Pictures/build.png";
+    geode::utils::file::pick(
+        geode::utils::file::PickMode::OpenFile,
+        {}
+    ).listen([](auto result) {
 
-    auto result = ImageAnalyzer::analyze(path);
-    auto stats = LayoutAnalyzer::analyze();
+        if (!result) {
+            FLAlertLayer::create(
+                "Build From Image",
+                "No image selected",
+                "OK"
+            )->show();
+            return;
+        }
 
-    if (result.theme == "CRYSTAL") {
-        CrystalGenerator::generate(stats);
-    }
-    else if (result.theme == "GLOW") {
-        GlowGenerator::generate(stats);
-    }
-    else {
-        KuzuretaGenerator::generate();
-    }
+        auto path = result.unwrap();
 
-    FLAlertLayer::create(
-        "Build From Image",
-        ("Theme: " + result.theme).c_str(),
-        "OK"
-    )->show();
+        auto analysis =
+            ImageAnalyzer::analyze(
+                path.string()
+            );
+
+        auto stats =
+            LayoutAnalyzer::analyze();
+
+        if (analysis.theme == "CRYSTAL") {
+            CrystalGenerator::generate(stats);
+        }
+        else if (analysis.theme == "GLOW") {
+            GlowGenerator::generate(stats);
+        }
+        else {
+            KuzuretaGenerator::generate();
+        }
+
+        std::string message =
+            "Theme: " +
+            analysis.theme +
+            "\nCrystal: " +
+            std::to_string(
+                analysis.crystalDensity
+            ) +
+            "%\nGlow: " +
+            std::to_string(
+                analysis.glowDensity
+            ) +
+            "%\nFog: " +
+            std::to_string(
+                analysis.fogDensity
+            ) +
+            "%";
+
+        FLAlertLayer::create(
+            "Build From Image",
+            message.c_str(),
+            "OK"
+        )->show();
+    });
 }
