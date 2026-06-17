@@ -44,29 +44,13 @@ void ImageDecoPopup::open() {
 
             auto path = picked.value();
 
-            auto imageResult =
-                ImageAnalyzer::analyze(
-                    path.string()
-                );
-
-            auto stats =
-                LayoutAnalyzer::analyze();
-
-            if (imageResult.theme == "CRYSTAL") {
-                CrystalGenerator::generate(stats);
-            }
-            else if (imageResult.theme == "GLOW") {
-                GlowGenerator::generate(stats);
-            }
-            else {
-                KuzuretaGenerator::generate();
-            }
-
             FLAlertLayer::create(
-                "Build From Image",
-                ("Theme: " + imageResult.theme).c_str(),
+                "DEBUG PATH",
+                path.string().c_str(),
                 "OK"
             )->show();
+
+            return;
         }
     );
 }
