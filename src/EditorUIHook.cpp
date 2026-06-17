@@ -1,3 +1,4 @@
+#include "ImageDecoPopup.cpp"
 #include "EditorUIHook.hpp"
 
 #include "EditorLayerBridge.hpp"
@@ -49,44 +50,8 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
     return true;
 }
 
+
 void MyEditorUI::onDeco(CCObject*) {
-
-    auto analysis =
-        ImageAnalyzer::analyze(
-            "/storage/emulated/0/Pictures/build.png"
-        );
-
-    auto theme =
-        StyleClassifier::classify(
-            analysis
-        );
-
-    auto stats =
-        LayoutAnalyzer::analyze();
-
-    if (theme == "CRYSTAL") {
-
-        CrystalGenerator::generate(
-            stats
-        );
-
-    }
-    else if (theme == "GLOW") {
-
-        GlowGenerator::generate(
-            stats
-        );
-
-    }
-    else {
-
-        KuzuretaGenerator::generate();
-
-    }
-
-    FLAlertLayer::create(
-        "Build From Image",
-        theme.c_str(),
-        "OK"
-    )->show();
+    ImageDecoPopup::open();
 }
+
