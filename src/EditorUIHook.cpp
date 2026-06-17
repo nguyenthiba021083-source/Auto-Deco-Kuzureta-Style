@@ -1,10 +1,10 @@
 #include "EditorUIHook.hpp"
 #include "EditorLayerBridge.hpp"
+#include "ImageDecoPopup.hpp"
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
 
-class ImageDecoPopup;
 
 using namespace geode::prelude;
 
