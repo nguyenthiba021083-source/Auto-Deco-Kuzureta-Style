@@ -1,39 +1,38 @@
 #include "ImageDecoPopup.hpp"
 
+#include "ImageAnalyzer.hpp"
+#include "LayoutAnalyzer.hpp"
+#include "CrystalGenerator.hpp"
+#include "GlowGenerator.hpp"
+#include "KuzuretaGenerator.hpp"
+
 #include <Geode/Geode.hpp>
-#include <Geode/utils/file.hpp>
-#include <Geode/utils/async.hpp>
 
 using namespace geode::prelude;
 
 void ImageDecoPopup::open() {
-    auto future = geode::utils::file::pick(
-        geode::utils::file::PickMode::OpenFile,
-        {}
-    );
 
-    geode::async::spawn(
-        std::move(future),
-        [](geode::utils::file::PickResult result) {
+    auto imageResult =
+        ImageAnalyzer::analyze(
+            "/storage/emulated/0/Pictures/build.png"
+        );
 
-            if (!result) {
-                log::error("pick failed");
-                return;
-            }
+    auto stats =
+        LayoutAnalyzer::analyze();
 
-            auto picked = result.unwrap();
+    if (imageResult.theme == "CRYSTAL") {
+        CrystalGenerator::generate(stats);
+    }
+    else if (imageResult.theme == "GLOW") {
+        GlowGenerator::generate(stats);
+    }
+    else {
+        KuzuretaGenerator::generate();
+    }
 
-            if (!picked.has_value()) {
-                log::info("no file selected");
-                return;
-            }
-
-            auto path = picked.value();
-
-            log::info(
-                "picked file = {}",
-                path.string()
-            );
-        }
-    );
+    FLAlertLayer::create(
+        "Theme",
+        imageResult.theme.c_str(),
+        "OK"
+    )->show();
 }
