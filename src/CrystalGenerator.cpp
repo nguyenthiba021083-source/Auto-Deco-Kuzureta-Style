@@ -8,41 +8,34 @@
 using namespace geode::prelude;
 
 void CrystalGenerator::generate(
-    const LayoutStats& stats
+    const LayoutStats&
 ) {
-    auto editor =
-        EditorLayerBridge::editor;
+    auto editor = EditorLayerBridge::editor;
 
     if (!editor)
         return;
 
-    float center =
-        (stats.startX + stats.endX) * 0.5f;
-
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < 100; i++) {
 
         float x =
-            center +
-            ((i % 40) - 20) * 60.f;
+            300.f +
+            (i % 20) * 40.f;
 
         float y =
             120.f +
-            (i % 8) * 45.f;
+            (i / 20) * 60.f;
 
         auto obj =
             editor->createObject(
                 KuzuretaIDs::CRYSTAL_A,
-                {x,y},
+                {x, y},
                 false
             );
 
         if (!obj)
             continue;
 
-        obj->setScale(
-            1.f +
-            ((i % 4) * 0.3f)
-        );
+        obj->setScale(1.5f);
 
         editor->addChild(obj);
         editor->m_objects->addObject(obj);
