@@ -1,3 +1,6 @@
+cd ~/Auto-Deco-Kuzureta-Style
+
+cat > src/ImageDecoPopup.cpp << 'EOF'
 #include "ImageDecoPopup.hpp"
 
 #include "ImageAnalyzer.hpp"
@@ -8,65 +11,67 @@
 
 #include <Geode/Geode.hpp>
 #include <Geode/utils/file.hpp>
+#include <Geode/utils/async.hpp>
 
 using namespace geode::prelude;
 
 void ImageDecoPopup::open() {
-    geode::utils::file::pick(
+
+    auto future = geode::utils::file::pick(
         geode::utils::file::PickMode::OpenFile,
         {}
-    ).listen([](auto result) {
+    );
 
-        if (!result) {
+    geode::async::spawn(
+        std::move(future),
+        [](geode::utils::file::PickResult result) {
+
+            if (!result) {
+                FLAlertLayer::create(
+                    "Error",
+                    "Failed to open file picker",
+                    "OK"
+                )->show();
+                return;
+            }
+
+            auto picked = result.unwrap();
+
+            if (!picked.has_value()) {
+                FLAlertLayer::create(
+                    "Cancelled",
+                    "No image selected",
+                    "OK"
+                )->show();
+                return;
+            }
+
+            auto path = picked.value();
+
+            auto imageResult =
+                ImageAnalyzer::analyze(
+                    path.string()
+                );
+
+            auto stats =
+                LayoutAnalyzer::analyze();
+
+            if (imageResult.theme == "CRYSTAL") {
+                CrystalGenerator::generate(stats);
+            }
+            else if (imageResult.theme == "GLOW") {
+                GlowGenerator::generate(stats);
+            }
+            else {
+                KuzuretaGenerator::generate();
+            }
+
             FLAlertLayer::create(
                 "Build From Image",
-                "No image selected",
+                ("Theme: " + imageResult.theme).c_str(),
                 "OK"
             )->show();
-            return;
         }
-
-        auto path = result.unwrap();
-
-        auto analysis =
-            ImageAnalyzer::analyze(
-                path.string()
-            );
-
-        auto stats =
-            LayoutAnalyzer::analyze();
-
-        if (analysis.theme == "CRYSTAL") {
-            CrystalGenerator::generate(stats);
-        }
-        else if (analysis.theme == "GLOW") {
-            GlowGenerator::generate(stats);
-        }
-        else {
-            KuzuretaGenerator::generate();
-        }
-
-        std::string message =
-            "Theme: " +
-            analysis.theme +
-            "\nCrystal: " +
-            std::to_string(
-                analysis.crystalDensity
-            ) +
-            "%\nGlow: " +
-            std::to_string(
-                analysis.glowDensity
-            ) +
-            "%\nFog: " +
-            std::to_string(
-                analysis.fogDensity
-            ) +
-            "%";
-
-        FLAlertLayer::create(
-            "Build From Image",
-            message.c_str(),
-            "OK"
-        )->show();
-    });
+    );
 }
+EOF
