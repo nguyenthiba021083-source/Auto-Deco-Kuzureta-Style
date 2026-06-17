@@ -1,17 +1,10 @@
-#include "ImageDecoPopup.cpp"
 #include "EditorUIHook.hpp"
-
 #include "EditorLayerBridge.hpp"
-#include "ImageAnalyzer.hpp"
-#include "StyleClassifier.hpp"
-#include "LayoutAnalyzer.hpp"
-
-#include "KuzuretaGenerator.hpp"
-#include "CrystalGenerator.hpp"
-#include "GlowGenerator.hpp"
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
+
+class ImageDecoPopup;
 
 using namespace geode::prelude;
 
@@ -26,10 +19,8 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
             "GJ_plusBtn_001.png"
         );
 
-    if (!sprite) {
-        log::error("SPRITE NULL");
+    if (!sprite)
         return true;
-    }
 
     auto menu = CCMenu::create();
     menu->setPosition({0.f, 0.f});
@@ -45,13 +36,9 @@ bool MyEditorUI::init(LevelEditorLayer* editor) {
     menu->addChild(btn);
     this->addChild(menu);
 
-    log::info("BUILD FROM IMAGE READY");
-
     return true;
 }
-
 
 void MyEditorUI::onDeco(CCObject*) {
     ImageDecoPopup::open();
 }
-
